@@ -9,7 +9,7 @@ export const latestPlaylists = [
     id: "RDCLAK5uy_k66J6mE65JgdE4zoeNSzmw_16JB_ueINE",
   },
   {
-    title: "New Music Panjab",
+    title: "New Music Punjab",
     id: "RDCLAK5uy_mk3xwsayv9PxawuXS-U6ao9eMeNmSwYAM",
   },
   {
