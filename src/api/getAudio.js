@@ -54,8 +54,6 @@ export const getAudioUrls = async ({ id }) => {
   try {
     const response = await fetch(`${baseUrl}/song/${id}`);
 
-    console.log("Response", response);
-
     if (!response.ok) {
       throw new Error(`Server error: ${response.status}`);
     }
@@ -64,11 +62,12 @@ export const getAudioUrls = async ({ id }) => {
     console.log("Received data:", data);
 
     return {
-      audioFormatHigh: data.formats.high,
-      audioFormatLow: data.formats.low,
+      audioFormatHigh: data.audioFormatHigh,
+      // audioFormatLow: data.formats.low,
     };
   } catch (error) {
     console.error("Failed to get audio URLs:", error);
     throw error;
   }
 };
+
