@@ -38,13 +38,13 @@ const RelatedSongs = ({ songsList, setSongsList }) => {
 
   useEffect(() => {
     console.log("Related songs API data:", data); // <-- Add this
-    if (data?.related) {
-      const transformedData = data.related.map((song, index) => ({
+    if (data) {
+      const transformedData = data.songs.map((song, index) => ({
         index,
         videoId: song.id,
         title: song.title,
         thumbnails: song.thumbnail,
-        length: formatDuration(song.duration),
+        length: song.duration,
         artistInfo: {
           artist: [{ text: song.author || "Unknown Artist" }],
         },
