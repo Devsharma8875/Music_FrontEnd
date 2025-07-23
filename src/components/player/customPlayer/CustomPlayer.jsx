@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import "./CustomPlayer.css";
 import ReactPlayer from "react-player";
@@ -43,6 +44,7 @@ const CustomPlayer = ({
         !songsInfo[0]?.snippet.thumbnails?.maxres ? "small-hq-image" : ""
       }`}
     >
+      {/* Thumbnail Image */}
       {!isLoading && songsInfo.length ? (
         <img
           src={
@@ -62,11 +64,13 @@ const CustomPlayer = ({
           <Skeleton height={"200px"} />
         </SkeletonTheme>
       )}
+
+      {/* ReactPlayer for audio/video */}
       <ReactPlayer
         url={
-          activeToggle === "audio"
-            ? playerState.url
-            : `https://www.youtube.com/watch?v=${songId}`
+          activeToggle === "audio" || activeToggle === "video"
+            ? `https://www.youtube.com/watch?v=${songId}`
+            : null
         }
         ref={playerRef}
         volume={playerState.volume}
@@ -74,12 +78,13 @@ const CustomPlayer = ({
         playing={playerState.playing}
         onPlay={() => setPlayerState({ ...playerState, playing: true })}
         onPause={() => setPlayerState({ ...playerState, playing: false })}
-        width={"100%"}
-        height={"100%"}
+        width={activeToggle === "video" ? "100%" : "0px"}
+        height={activeToggle === "video" ? "100%" : "0px"}
         style={{
-          position: "absolute",
+          position: activeToggle === "video" ? "absolute" : "absolute",
           top: "0px",
-          transform: "scale(1.01)",
+          transform: activeToggle === "video" ? "scale(1.01)" : "scale(0)",
+          display: activeToggle === "video" ? "block" : "none",
         }}
         onProgress={(state) =>
           setPlayerState({
@@ -90,18 +95,21 @@ const CustomPlayer = ({
         }
         onEnded={() => (autoPlay ? handleNext() : null)}
         onError={(e) => {
-          // Check the error code
-          console.log(e.target.error);
-          if (e.target.error.code === 4 || !e.target.error.message.length) {
-            // Handle the 403 error
+          console.log(e?.target?.error);
+          if (
+            e?.target?.error?.code === 4 ||
+            !e?.target?.error?.message?.length
+          ) {
             setPlayerState({ ...playerState, url: null });
-            activeToggle === "audio"
-              ? setAlertMessage("Try reloading or switching to video.")
-              : null;
+            if (activeToggle === "audio") {
+              setAlertMessage("Try reloading or switching to video.");
+            }
           }
         }}
       />
-      {activeToggle === "video" ? (
+
+      {/* Fullscreen Button (only for video) */}
+      {activeToggle === "video" && (
         <button
           type="button"
           title="fullScreen"
@@ -110,7 +118,7 @@ const CustomPlayer = ({
         >
           <BsFullscreen size={18} />
         </button>
-      ) : null}
+      )}
     </div>
   );
 };
