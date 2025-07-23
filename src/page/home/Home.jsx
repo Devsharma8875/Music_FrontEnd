@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "./Home.css";
 import SongsList from "../../components/songsList/SongsList";
 
-import { homepagePlaylistInfo } from "../../utils/homepagePlaylists";
+import homepagePlaylistInfo from "../../utils/homepagePlaylists";
 
 const Home = () => {
   useEffect(() => {
